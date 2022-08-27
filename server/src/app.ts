@@ -1,8 +1,11 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
-const bodyParser = require('body-parser');
-const cors = require('cors');
 import mongoose from 'mongoose'
-const userModel = require("./../models/user.js");
+const cors = require('cors');
+
+const bodyParser = require('body-parser');
+
+const userModel = require("./../models/user.ts");
+import todoRoutes from "./../routes"
 
 const app: Application = express();
 
@@ -11,9 +14,9 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 
-const url = 'mongodb://localhost:27017/test';
+const uri = process.env.MONGO_DB || 'mongodb://localhost:27017/test';
 
-mongoose.connect(url);
+mongoose.connect(uri);
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error: "));

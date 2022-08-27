@@ -11,7 +11,7 @@ function App() {
   return (
     <div className="App">
        <header className="btn-container">
-          <button onClick={callMe}>Call API</button>
+          <button className="btn" onClick={callMe}>Call API</button>
         </header>
     </div>
   )
