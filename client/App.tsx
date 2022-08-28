@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import './../css/style.css'
+
 
 function App() {
 
@@ -8,8 +8,12 @@ function App() {
         .then(data => data.json())
         .then(json => alert(JSON.stringify(json)))
   }
+  
+  // lets delete this App, extract the api to services and have the button as a component 
+
   return (
     <div className="App">
+        
        <header className="btn-container">
           <button className="btn" onClick={callMe}>Call API</button>
         </header>
