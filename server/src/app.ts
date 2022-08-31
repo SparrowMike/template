@@ -10,7 +10,7 @@ import todoRoutes from "./routes"
 
 const app: Application = express();
 
-const PORT: string | number = process.env.PORT || 4000;
+const PORT: string | number = process.env.PORT || 5000;
 
 app.use(cors());
 

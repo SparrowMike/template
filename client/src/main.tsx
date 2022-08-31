@@ -5,6 +5,7 @@ import './styles/css/style.css'
 import App from './App'
 import NavigationBar from './layouts/NavigationBar'
 import Doers from './components/Doers'
+import DoIt from './TODO/DoApp'
 
 //? react router v6.3.0
 //? https://reactrouter.com/en/v6.3.0/getting-started/overview
@@ -14,7 +15,7 @@ render(
       <NavigationBar /> 
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="/doers" element={<Doers />} />
+        <Route path="/doers" element={<DoIt />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,
