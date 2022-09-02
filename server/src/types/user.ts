@@ -7,4 +7,5 @@ export interface UserType extends Document {
 
 export interface UserModel extends Model<UserType> {
   findAndValidate(username: string, password: string): UserType | false;
+  signup(username: string, password: string): UserType
 }

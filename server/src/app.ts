@@ -29,7 +29,7 @@ app.use(session({ secret: process.env.SECRET }))
 
 //?===========Routes=============
 app.use(toDoRoutes)
-app.use(userRoutes)
+app.use('/api/user', userRoutes)
 
 mongoose.connect(uri);
 

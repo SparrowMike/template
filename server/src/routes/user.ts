@@ -1,5 +1,5 @@
 import { Router, Response, Request, NextFunction } from "express"
-import { secret, register, login, logout } from "../controllers/user"
+import { secret, register, signup, login, logout } from "../controllers/user"
 
 const userRoutes: Router = Router()
 
@@ -13,16 +13,17 @@ const requireLogin = (req: Request, res: Response, next: NextFunction): void=> {
   next()
 }
 
-userRoutes.get("/secret", requireLogin, secret)
+userRoutes.get('/secret', requireLogin, secret)
 
-// userRoutes.get("/register", register)
+// userRoutes.get('/register', register)
 
-userRoutes.post("/register", register)
+userRoutes.post('/register', register)
+userRoutes.post('/signup', signup)
 
-// userRoutes.get("/login", login)
+// userRoutes.get('/login', login)
 
-userRoutes.post("/login", login)
+userRoutes.post('/login', login)
 
-userRoutes.post("/logout", logout)
+userRoutes.post('/logout', logout)
 
 export default userRoutes
