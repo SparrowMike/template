@@ -18,7 +18,8 @@ const PORT: string | number = process.env.PORT || 5000;
 
 app.use(cors());
 
-const uri = process.env.MONGO_DB || 'mongodb://localhost:27017/template';
+// const uri = process.env.MONGO_DB || 'mongodb://localhost:27017/template';
+const uri = 'mongodb://localhost:27017/template';
 
 //?==========Middleware==========
 app.use(cors())
