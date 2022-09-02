@@ -1,8 +1,14 @@
 import { UserType, UserModel } from "../types/user"
 import { model, Schema } from "mongoose"
+import validator from 'validator';
 const bcrypt = require('bcrypt')
 
 const userSchema: Schema = new Schema({
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
     username: {
         type: String,
         required: true,
@@ -14,7 +20,18 @@ const userSchema: Schema = new Schema({
     }
 });
 
-userSchema.statics.signup = async function(username: string, password: string) {
+userSchema.statics.signup = async function(email: string, username: string, password: string) {
+    //? ===== validation =====
+    if (!username || !password) {
+        throw Error('All fields must be filled');
+    }
+    if (!validator.isEmail(email)) {
+        throw Error('Email is not valid');
+    }
+    if (!validator.isStrongPassword(password)) {
+        throw Error('Password is not strong enough');
+    }
+
     const exists = await this.findOne({ username });
 
     if(exists) {
@@ -22,7 +39,7 @@ userSchema.statics.signup = async function(username: string, password: string) {
     }
     
     const hash = await bcrypt.hash(password, 12);
-    const user = await this.create({ username, password: hash })
+    const user = await this.create({ email, username, password: hash })
 
     return user 
 }
@@ -34,7 +51,7 @@ userSchema.statics.findAndValidate = async function(username, password) {
 };
 
 userSchema.pre('save', async function(next) {
-    if(!this.isModified('password')) return next()
+    if (!this.isModified('password')) return next()
     this.password = await bcrypt.hash(this.password, 12)
     next();
 });

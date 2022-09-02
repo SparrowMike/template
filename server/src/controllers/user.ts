@@ -9,16 +9,16 @@ const secret =  (req: Request, res: Response): void => {
 }
 
 const register = async (req: Request, res: Response): Promise<void> => {
-  const { username, password } = req.body;
-  const user = new User({ username, password })
+  const { email, username, password } = req.body;
+  const user = new User({ email, username, password })
   await user.save();
   res.send('/secret');
 }
 
 const signup = async (req: Request, res: Response): Promise<void> => {
-  const { username, password } = req.body
+  const { email, username, password } = req.body
   try {
-    const user: any = await User.signup(username, password)
+    const user: any = await User.signup(email, username, password)
     res.status(200).json({ username, user })
   } catch(error: unknown) { //? or any to remove if / else 
     if (error instanceof Error) {
@@ -30,8 +30,8 @@ const signup = async (req: Request, res: Response): Promise<void> => {
 }
 
 const login = async (req: Request, res: Response): Promise<void> => {
-  const { username, password } = req.body; 
-  const foundUser = await User.findAndValidate(username, password);
+  const { email, username, password } = req.body; 
+  const foundUser = await User.findAndValidate(email, username, password);
   if (foundUser) {
     req.session!.user_id = foundUser._id
     res.send('/secret'); 
