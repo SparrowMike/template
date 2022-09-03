@@ -1,7 +1,7 @@
 import React from 'react'
 
 type Props = TodoProps & {
-    updateTodo: (todo: ITodo) => void
+    updateTodo: (todo: ITodo) => void 
     deleteTodo: (_id: string) => void
 }
 

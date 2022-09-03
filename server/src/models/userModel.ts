@@ -1,4 +1,4 @@
-import { UserType, UserModel } from "../types/userTypes"
+import { UserType, UserModel } from "../interfaces/userTypes"
 import { model, Schema } from "mongoose"
 import validator from 'validator';
 const bcrypt = require('bcrypt')

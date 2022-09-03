@@ -17,7 +17,7 @@ app.use(cors())
 app.use(express.json());
 
 //?===========Routes=============
-app.use(toDoRoutes)
+app.use('/api/todo', toDoRoutes)
 app.use('/api/user', userRoutes)
 
 //?===========Connect=============

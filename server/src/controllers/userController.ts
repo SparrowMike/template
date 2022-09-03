@@ -1,5 +1,5 @@
 import { Response, Request, NextFunction } from 'express'
-import { UserType } from '../types/userTypes'
+import { UserType } from '../interfaces/userTypes'
 import User from '../models/userModel'
 const jwt = require('jsonwebtoken');
 
