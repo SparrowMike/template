@@ -8,9 +8,9 @@ const createToken = (_id: string) => {
 }
 
 const login = async (req: Request, res: Response): Promise<void> => {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
     try {
-        const user = await User.login(username, password)
+        const user = await User.login(email, password)
         const token = createToken(user._id);
         res.status(200).json({ user, token })
     } catch (error: any) {
@@ -19,9 +19,9 @@ const login = async (req: Request, res: Response): Promise<void> => {
 }
 
 const signup = async (req: Request, res: Response) => {
-    const { username, password } = req.body
+    const { email, password } = req.body
     try {
-        const user: UserType = await User.signup(username, password)
+        const user: UserType = await User.signup(email, password)
         const token = createToken(user._id);
         res.status(200).json({ user, token })
     } catch (error: unknown) { //? or type any to remove if / else 

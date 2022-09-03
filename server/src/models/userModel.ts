@@ -4,7 +4,7 @@ import validator from 'validator';
 const bcrypt = require('bcrypt')
 
 const userSchema: Schema = new Schema({
-    username: {
+    email: {
         type: String,
         required: true,
         unique: true
@@ -15,37 +15,37 @@ const userSchema: Schema = new Schema({
     }
 });
 
-userSchema.statics.signup = async function( username: string, password: string) {
-    if (!username || !password) {
+userSchema.statics.signup = async function( email: string, password: string) {
+    if (!email || !password) {
         throw Error('All fields must be filled');
     }
-    // if (!validator.isEmail(email)) {
-    //     throw Error('Email is not valid');
-    // }
+    if (!validator.isEmail(email)) {
+        throw Error('Email is not valid');
+    }
     if (!validator.isStrongPassword(password)) {
         throw Error('Password is not strong enough');
     }
 
-    const exists = await this.findOne({ username });
+    const exists = await this.findOne({ email });
 
     if(exists) {
-        throw Error('Username already taken');
+        throw Error('email already taken');
     }
     
     const hash = await bcrypt.hash(password, 12);
-    const user = await this.create({ username, password: hash })
+    const user = await this.create({ email, password: hash })
 
     return user 
 }
 
-userSchema.statics.login = async function(username: string, password: string) {
-    if (!username || !password) {
+userSchema.statics.login = async function(email: string, password: string) {
+    if (!email || !password) {
         throw Error('All fields must be filled');
     }
-    const user = await this.findOne({ username });
+    const user = await this.findOne({ email });
     
     if (!user) {
-        throw Error('Incorrect username')
+        throw Error('Incorrect email')
     }
     
     const isValid = await bcrypt.compare(password, user.password);
