@@ -4,7 +4,7 @@ import { useState } from 'react'
 function App() {
 
   const callMe = () => {
-    fetch('http://localhost:5000/api/data', { method: 'GET' })
+    fetch('http://localhost:5000/api/user/allusers', { method: 'GET' })
         .then(data => data.json())
         .then(json => alert(JSON.stringify(json)))
   }
