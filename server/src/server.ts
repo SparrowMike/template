@@ -1,9 +1,9 @@
 import express, { Application } from 'express';
 import mongoose from 'mongoose'
-const cors = require('cors');
+// const cors = require('cors');
 
 const app: Application = express();
-const PORT: string | number = process.env.PORT || 5000;
+const PORT: string | number = process.env.PORT || 4000;
 
 //?============Routes=============
 import toDoRoutes from './routes/todoRoutes';
@@ -13,7 +13,7 @@ import userRoutes from './routes/userRoutes';
 const uri = 'mongodb://localhost:27017/template';
 
 //?==========Middleware==========
-app.use(cors())
+// app.use(cors())
 app.use(express.json());
 
 //?===========Routes=============

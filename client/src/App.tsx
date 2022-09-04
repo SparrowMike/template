@@ -1,22 +1,22 @@
-import { useState } from 'react'
-
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import NavigationBar from './layouts/NavigationBar'
+import DoIt from './TODO/DoApp'
+import Home from './pages/Home';
+import Signup from './pages/Signup';
+import Login from './pages/Login';
 
 function App() {
 
-  const callMe = () => {
-    fetch('http://localhost:5000/api/user/allusers', { method: 'GET' })
-        .then(data => data.json())
-        .then(json => alert(JSON.stringify(json)))
-  }
-  
-  // lets delete this App, extract the api to services and have the button as a component 
-
   return (
-    <div className="App">
-       <header className="btn-container">
-          <button className="btn" onClick={callMe}>Call API</button>
-        </header>
-    </div>
+    <BrowserRouter>
+      <NavigationBar /> 
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/doers" element={<DoIt />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
