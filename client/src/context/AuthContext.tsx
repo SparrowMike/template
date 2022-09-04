@@ -1,8 +1,16 @@
 import { createContext, useReducer } from 'react'
 
+interface User {
+  token: string, 
+  user: { email: string, password: string }
+}
 interface IContextProps {
-  state: any;
-  dispatch: ({type}:{type:string}) => void;
+  user: User,
+  state: any,
+  dispatch: ({ type }: { 
+    type: string, 
+    payload?: User
+    }) => void;
 }
 
 export const AuthContext = createContext({} as IContextProps);
