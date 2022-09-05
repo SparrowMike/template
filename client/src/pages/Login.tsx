@@ -7,7 +7,6 @@ export default function Login() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    console.log(name, value)
     setUser(prevState => ({
         ...prevState,
         [name]: value
