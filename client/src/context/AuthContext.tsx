@@ -1,8 +1,8 @@
-import { createContext, useReducer } from 'react'
+import { createContext, useReducer, useEffect } from 'react'
 
 interface User {
   token: string, 
-  user: { email: string, password: string }
+  user: { email: string | null, password: string }
 }
 interface IContextProps {
   user: User,
@@ -31,6 +31,15 @@ export const AuthContextProvider = ({ children }: any) => {
   const [state, dispatch] = useReducer(authReducer, {
     user: null
   })
+
+  useEffect(() => {
+    // @ts-ignore
+    const user: User = JSON.parse(localStorage.getItem('user') || '');
+
+    if (user) {
+      dispatch({ type: 'LOGIN', payload: user })
+    }
+  }, [])
 
   console.log(`AuthContext state ${JSON.stringify(state)}`)
   console.log(`AuthContext children ${JSON.stringify(children)}`)

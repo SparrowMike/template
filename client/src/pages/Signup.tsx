@@ -3,7 +3,7 @@ import { useSignup } from "../hooks/useSignup";
 
 export default function Signup() {
   const [ user, setUser ] = useState({ email: '', password: '' })
-  const { signup, error, isLoading }: any = useSignup()
+  const { signup, error, isLoading } = useSignup()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

@@ -6,6 +6,7 @@ export default function NavigationBar() {
   const { logout } = useLogout()
   const { user } = useAuthContext()
 
+  console.log('eight here', user)
   const handleLogout = () => {
     logout()
   }
@@ -20,6 +21,7 @@ export default function NavigationBar() {
       </Link>
       {user && (
         <div style={{display: 'inline-block'}}>
+          <span>{user.user.email}</span>
           <button onClick={handleLogout}>Log out</button>
         </div>
       )}
