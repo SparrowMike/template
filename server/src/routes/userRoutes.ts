@@ -8,7 +8,7 @@ const userRoutes: Router = Router()
 
 userRoutes.get('/deleteall', deleteAll);
 
-userRoutes.get('/allusers',requireAuth, getUsers);
+userRoutes.get('/allusers',requireAuth , getUsers);
 
 userRoutes.post('/signup', signup) 
 
