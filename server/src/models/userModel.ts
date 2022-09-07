@@ -57,9 +57,4 @@ userSchema.statics.login = async function(email: string, password: string) {
     return user
 }
 
-userSchema.statics.checker = async function(_id: string) {
-    const user = await this.findOne({ _id }).select('_id');
-    return 
-}
-
 export default model<UserType, UserModel>("User", userSchema);

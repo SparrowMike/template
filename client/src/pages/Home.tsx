@@ -7,7 +7,7 @@ export default function Home() {
     console.log(user)
     if (user) {
       const response = await fetch('/api/user/allusers', { 
-        // method: 'GET', 
+        method: 'GET', 
         headers: {
           'Authorization': `Bearer ${user.token}`
         } 
