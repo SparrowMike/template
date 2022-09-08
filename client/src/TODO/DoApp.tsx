@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react'
 import TodoItem from './TodoItem'
 import AddTodo from './AddTodo'
 import { getTodos, addTodo, updateTodo, deleteTodo } from './API'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const App: React.FC = () => {
+  const { user } = useAuthContext()
+  
   const [todos, setTodos] = useState<ITodo[]>([])
 
   useEffect(() => {
@@ -11,14 +14,14 @@ const App: React.FC = () => {
   }, [])
 
   const fetchTodos = (): void => {
-    getTodos()
+    getTodos(user.token)
     .then(({ data: { todos } }: ITodo[] | any) => setTodos(todos))
     .catch((err: Error) => console.log(err))
   }
 
  const handleSaveTodo = (e: React.FormEvent, formData: ITodo): void => {
    e.preventDefault()
-   addTodo(formData)
+   addTodo(formData, user.token)
    .then(({ status, data }) => {
     if (status !== 201) {
       throw new Error('Error! Todo not saved')
@@ -29,7 +32,7 @@ const App: React.FC = () => {
 }
 
   const handleUpdateTodo = (todo: ITodo): void => {
-    updateTodo(todo)
+    updateTodo(todo, user.token)
     .then(({ status, data }) => {
         if (status !== 200) {
           throw new Error('Error! Todo not updated')
@@ -40,7 +43,7 @@ const App: React.FC = () => {
   }
 
   const handleDeleteTodo = (_id: string): void => {
-    deleteTodo(_id)
+    deleteTodo(_id, user.token)
     .then(({ status, data }) => {
         if (status !== 200) {
           throw new Error('Error! Todo not deleted')

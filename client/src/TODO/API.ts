@@ -2,11 +2,16 @@ import axios, { AxiosResponse } from 'axios'
 
 const baseUrl: string = '/api/todo'
 
-export const getTodos = async (): Promise<AxiosResponse<ApiDataType>> => {
+export const getTodos = async (token: string): Promise<AxiosResponse<ApiDataType>> => {
   try {
-    const todos: AxiosResponse<ApiDataType> = await axios.get(
-      baseUrl + '/todos'
-    )
+    const todos: AxiosResponse<ApiDataType> = await axios({
+      method: 'get',
+      url: baseUrl + '/todos',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+
     return todos
   } catch (error: any) {
     throw new Error(error)
@@ -14,7 +19,8 @@ export const getTodos = async (): Promise<AxiosResponse<ApiDataType>> => {
 }
 
 export const addTodo = async (
-  formData: ITodo
+  formData: ITodo,
+  token: string
 ): Promise<AxiosResponse<ApiDataType>> => {
   try {
     const todo: Omit<ITodo, '_id'> = {
@@ -24,7 +30,12 @@ export const addTodo = async (
     }
     const saveTodo: AxiosResponse<ApiDataType> = await axios.post(
       baseUrl + '/add-todo',
-      todo
+      todo,
+        {
+          headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
     )
     return saveTodo
   } catch (error: any) {
@@ -33,7 +44,8 @@ export const addTodo = async (
 }
 
 export const updateTodo = async (
-  todo: ITodo
+  todo: ITodo,
+  token: string
 ): Promise<AxiosResponse<ApiDataType>> => {
   try {
     const todoUpdate: Pick<ITodo, 'status'> = {
@@ -41,7 +53,12 @@ export const updateTodo = async (
     }
     const updatedTodo: AxiosResponse<ApiDataType> = await axios.put(
       `${baseUrl}/edit-todo/${todo._id}`,
-      todoUpdate
+      todoUpdate,
+        {
+          headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
     )
     return updatedTodo
   } catch (error: any) {
@@ -50,11 +67,17 @@ export const updateTodo = async (
 }
 
 export const deleteTodo = async (
-  _id: string
+  _id: string,
+  token: string
 ): Promise<AxiosResponse<ApiDataType>> => {
   try {
     const deletedTodo: AxiosResponse<ApiDataType> = await axios.delete(
-      `${baseUrl}/delete-todo/${_id}`
+      `${baseUrl}/delete-todo/${_id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
     )
     return deletedTodo
   } catch (error: any) {

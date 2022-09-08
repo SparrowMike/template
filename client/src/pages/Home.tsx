@@ -4,7 +4,6 @@ export default function Home() {
   const { user } = useAuthContext();
 
   const callMe = async () => {
-    console.log(user)
     if (user) {
       const response = await fetch('/api/user/allusers', { 
         method: 'GET', 

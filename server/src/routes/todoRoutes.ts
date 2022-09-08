@@ -1,7 +1,10 @@
 import { Router } from "express"
 import { getTodos, addTodo, updateTodo, deleteTodo } from "../controllers/todoController"
+import { requireAuth } from "../middleware/requireAuth"
 
 const toDoRoutes: Router = Router()
+
+toDoRoutes.use(requireAuth)
 
 toDoRoutes.get("/todos", getTodos)
 
