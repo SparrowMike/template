@@ -6,7 +6,7 @@ import { useAuthContext } from '../hooks/useAuthContext'
 
 const App: React.FC = () => {
   const { user } = useAuthContext()
-  
+
   const [todos, setTodos] = useState<ITodo[]>([])
 
   useEffect(() => {
@@ -14,26 +14,42 @@ const App: React.FC = () => {
   }, [])
 
   const fetchTodos = (): void => {
-    getTodos(user.token)
-    .then(({ data: { todos } }: ITodo[] | any) => setTodos(todos))
-    .catch((err: Error) => console.log(err))
+    if (!user) {
+      console.log('You must be logged in')
+      return
+    } 
+
+    getTodos(user)
+      .then(({ data: { todos } }: ITodo[] | any) => setTodos(todos))
+      .catch((err: Error) => console.log(err))
   }
 
- const handleSaveTodo = (e: React.FormEvent, formData: ITodo): void => {
-   e.preventDefault()
-   addTodo(formData, user.token)
-   .then(({ status, data }) => {
-    if (status !== 201) {
-      throw new Error('Error! Todo not saved')
-    }
-    setTodos(data.todos)
-  })
-  .catch((err) => console.log(err))
-}
+  const handleSaveTodo = (e: React.FormEvent, formData: ITodo): void => {
+    e.preventDefault()
+
+    if (!user) {
+      console.log('You must be logged in')
+      return
+    } 
+
+    addTodo(formData, user)
+      .then(({ status, data }) => {
+        if (status !== 201) {
+          throw new Error('Error! Todo not saved')
+        }
+        setTodos(data.todos)
+      })
+      .catch((err) => console.log(err))
+  }
 
   const handleUpdateTodo = (todo: ITodo): void => {
-    updateTodo(todo, user.token)
-    .then(({ status, data }) => {
+    if (!user) {
+      console.log('You must be logged in')
+      return
+    } 
+    
+    updateTodo(todo, user)
+      .then(({ status, data }) => {
         if (status !== 200) {
           throw new Error('Error! Todo not updated')
         }
@@ -43,8 +59,13 @@ const App: React.FC = () => {
   }
 
   const handleDeleteTodo = (_id: string): void => {
-    deleteTodo(_id, user.token)
-    .then(({ status, data }) => {
+    if (!user) {
+      console.log('You must be logged in')
+      return
+    } 
+    
+    deleteTodo(_id, user)
+      .then(({ status, data }) => {
         if (status !== 200) {
           throw new Error('Error! Todo not deleted')
         }
