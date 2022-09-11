@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useLogin } from "../hooks/useLogin";
 
 export default function Login() {
@@ -17,8 +17,8 @@ export default function Login() {
     e.preventDefault();
 
     await login(user.email, user.password)
-    console.log(user)
   }
+  
   return (
     <form className='login' onSubmit={handleSubmit}>
       <h3>Login</h3>

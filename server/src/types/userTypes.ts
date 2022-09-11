@@ -6,6 +6,6 @@ export interface UserType extends Document {
 }
 
 export interface UserModel extends Model<UserType> {
-  signup(email: string, password: string): UserType
+  signup( email: string, password: string): UserType
   login(email: string, password: string): UserType
 }
