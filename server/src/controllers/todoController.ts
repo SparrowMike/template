@@ -4,7 +4,9 @@ import Todo from '../models/todoModel'
 
 const getTodos = async (req: Request, res: Response): Promise<void> => {
     try {
-        const todos: ITodo[] = await Todo.find()
+        const user_id = req.user!._id
+
+        const todos: ITodo[] = await Todo.find({ user_id })
         res.status(200).json({ todos })
     } catch (error) {
         throw error
@@ -13,12 +15,15 @@ const getTodos = async (req: Request, res: Response): Promise<void> => {
 
 const addTodo = async (req: Request, res: Response): Promise<void> => {
     try {
+        const user_id = req.user!._id
+
         const body = req.body as Pick<ITodo, 'name' | 'description' | 'status'>
 
         const todo: ITodo = new Todo({
             name: body.name,
             description: body.description,
             status: body.status,
+            user_id: user_id
         }) 
 
         const newTodo: ITodo = await todo.save()
