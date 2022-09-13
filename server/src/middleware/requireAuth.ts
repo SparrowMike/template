@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 const jwt = require('jsonwebtoken');
 import User from '../models/userModel'
+import ExpressError from '../utils/ExpressError';
 
 export type EndPointResponse = Promise<Response>;
 
