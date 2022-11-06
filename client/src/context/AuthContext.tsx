@@ -1,4 +1,5 @@
 import { createContext, useReducer, useEffect } from 'react'
+import { useJwt } from "react-jwt";
 
 interface User {
   token: string, 
@@ -16,11 +17,13 @@ interface IContextProps {
 export const AuthContext = createContext({} as IContextProps);
 
 export const authReducer = (state: any, action: { type: any, payload: any }) => {
-  console.log(`authReducer ${state}, ${action}`)
+  // console.log(`authReducer ${JSON.stringify(state)}, ${JSON.stringify(action)}`)
+  console.log(state, action)
   switch(action.type) {
     case 'LOGIN':
       return { user: action.payload }
     case 'LOGOUT':
+      console.log('tit')
       return { user: null }
     default: 
       return state
@@ -32,17 +35,22 @@ export const AuthContextProvider = ({ children }: any) => {
     user: null
   })
 
-  useEffect(() => {
-    // @ts-ignore
-    const user: User = JSON.parse(localStorage.getItem('user'));
+  // @ts-ignore
+  let user: User = JSON.parse(localStorage.getItem('user'));
+  const { decodedToken, isExpired } = useJwt(user?.token);
 
+  if (isExpired) {
+    localStorage.removeItem('user');
+  }
+
+  console.log(`AuthContext children ${JSON.stringify(children)}`)
+
+  useEffect(() => {
     if (user) {
       dispatch({ type: 'LOGIN', payload: user })
     }
   }, [])
-
-  console.log(`AuthContext state ${JSON.stringify(state)}`)
-  console.log(`AuthContext children ${JSON.stringify(children)}`)
+  
 
   return (
     <AuthContext.Provider value={{ ...state, dispatch }}>

@@ -23,13 +23,16 @@ export default function Home() {
       setData(json)
     }
   }
+  console.log('----------------------------------', user)
 
   return (
     <div className="App">
-      <header className="btn-container">
-          <button className='btn'  onClick={callMe}>Modal</button>
-          <Modal data={data} open={isOpen} onClose={() => setIsOpen(false)} />
-      </header>
+      {!user && 
+        <header className="btn-container">
+            <button className='btn'  onClick={callMe}>Modal</button>
+            <Modal data={data} open={isOpen} onClose={() => setIsOpen(false)} />
+        </header>
+      }
     </div>
   )
 }

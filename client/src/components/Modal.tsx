@@ -25,7 +25,7 @@ export default function Modal({ open, onClose, data }: Modal ) {
       <div className='overlay' onClick={onClose}></div>
       <div className='modal'>
         <button onClick={onClose}>close</button>
-        {data.map((item, index) => {
+        {data && data.map((item, index) => {
           return (
             <h1 key={index} >{ index + 1 } - { item.email }</h1>
           )
